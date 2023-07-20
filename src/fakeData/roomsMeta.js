@@ -5,7 +5,7 @@ const roomsMeta = [
     active: true,
     name: "高級房 (不含早餐) (Superior Room（Room only))",
     type: 5,
-    people: 2,
+    people: 5,
     cleanPolicy: {
       status: false,
       fee: 0,

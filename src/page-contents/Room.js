@@ -3,14 +3,12 @@ import styled from "styled-components";
 
 import CustomInputNumber from "../components/CustomInputNumber";
 
-const Room = ({ maxPeople, assignedGuest, assignGuest }) => {
+const Room = ({ maxPeople, remainedGuest, assignGuest }) => {
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(0);
 
   const onAdultNumberClick = (event) => {
     const type = event.target.name;
-
-    console.log("click Ken ++++++++++++++");
 
     if (type === "minus" && adultQuantity > 0) {
       setAdultQuantity(adultQuantity - 1);
@@ -52,7 +50,7 @@ const Room = ({ maxPeople, assignedGuest, assignGuest }) => {
           value={adultQuantity}
           onChange={onAdultNumberClick}
           isDisabled={
-            adultQuantity + childQuantity >= maxPeople || assignedGuest <= 0
+            adultQuantity + childQuantity >= maxPeople || remainedGuest <= 0
           }
         />
       </PanelWrapper>
@@ -62,7 +60,7 @@ const Room = ({ maxPeople, assignedGuest, assignGuest }) => {
           value={childQuantity}
           onChange={onChildNumberClick}
           isDisabled={
-            adultQuantity + childQuantity >= maxPeople || assignedGuest <= 0
+            adultQuantity + childQuantity >= maxPeople || remainedGuest <= 0
           }
         />
       </PanelWrapper>
@@ -72,7 +70,10 @@ const Room = ({ maxPeople, assignedGuest, assignGuest }) => {
 
 export default Room;
 
-const RoomWrapper = styled.div``;
+const RoomWrapper = styled.div`
+  margin-bottom: 18px;
+  border-bottom: 1px solid #eee;
+`;
 
 const PanelWrapper = styled.div`
   display: flex;

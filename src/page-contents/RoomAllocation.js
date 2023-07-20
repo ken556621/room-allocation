@@ -9,6 +9,8 @@ const RoomAllocation = ({}) => {
   const [totalGuest, setTotalGuest] = useState(0);
   const [assignedGuest, setAssignedGuest] = useState(0);
 
+  const remainedGuest = totalGuest - assignedGuest;
+
   const assignGuest = (event) => {
     const type = event.target.name;
 
@@ -17,8 +19,6 @@ const RoomAllocation = ({}) => {
     }
 
     if (type === "plus") {
-      const result = assignedGuest + 1;
-
       setAssignedGuest(assignedGuest + 1);
     }
   };
@@ -29,11 +29,11 @@ const RoomAllocation = ({}) => {
         key={room.id}
         id={room.id}
         maxPeople={room.people}
-        assignedGuest={assignedGuest}
+        remainedGuest={remainedGuest}
         assignGuest={assignGuest}
       />
     ));
-  }, [roomsInfo]);
+  }, [roomsInfo, assignGuest]);
 
   useEffect(() => {
     // Mock api request behavior
@@ -49,7 +49,7 @@ const RoomAllocation = ({}) => {
       <Title>
         住客人數：{totalGuest} 人 / {roomsInfo.length} 房
       </Title>
-      <Notification>尚未分配人數：{assignedGuest} 人</Notification>
+      <Notification>尚未分配人數：{remainedGuest} 人</Notification>
       {renderRooms}
     </RoomAllocationWrapper>
   );
@@ -74,7 +74,7 @@ const Title = styled.div`
 `;
 
 const Notification = styled.div`
-  margin-bottom: 18px;
+  margin-bottom: 42px;
   padding: 12px;
   font-size: 14px;
   line-height: 20px;

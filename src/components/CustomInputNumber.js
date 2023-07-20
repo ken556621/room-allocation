@@ -1,5 +1,6 @@
-import { useRef } from "react";
 import styled from "styled-components";
+
+import useLongPress from "../hooks/useLongPress";
 
 const CustomInputNumber = ({
   min,
@@ -11,37 +12,15 @@ const CustomInputNumber = ({
   onBlur,
   isDisabled,
 }) => {
-  const intervalRef = useRef(null);
-
   const onClickButton = (event) => {
     onChange && onChange(event);
   };
 
-  const startCounter = (event) => {
-    if (intervalRef.current) return;
-    intervalRef.current = setInterval(() => {
-      onChange(event);
-    }, 50);
-  };
-
-  const stopCounter = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
+  const longPressProps = useLongPress(onClickButton);
 
   return (
     <CustomInputNumberWrapper>
-      <ControlButton
-        type="button"
-        name="minus"
-        onClick={onClickButton}
-        onMouseDown={startCounter}
-        onMouseUp={stopCounter}
-        onMouseLeave={stopCounter}
-        disabled={value <= 0}
-      >
+      <ControlButton name="minus" onClick={onClickButton} disabled={value <= 0}>
         <span>-</span>
       </ControlButton>
       <CustomInput
@@ -53,14 +32,7 @@ const CustomInputNumber = ({
         value={value}
         onChange={() => {}}
       />
-      <ControlButton
-        name="plus"
-        onClick={onClickButton}
-        onMouseDown={startCounter}
-        onMouseUp={stopCounter}
-        onMouseLeave={stopCounter}
-        disabled={isDisabled}
-      >
+      <ControlButton name="plus" onClick={onClickButton} disabled={isDisabled}>
         <span>+</span>
       </ControlButton>
     </CustomInputNumberWrapper>
